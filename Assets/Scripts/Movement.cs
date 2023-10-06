@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class Movement : MonoBehaviour
 {
     [Header("Control")]
     [SerializeField] DynamicJoystick m_Joystick;
     [SerializeField] float m_MoveSpeed = 10;
-    CharacterController m_CharacterController;
+    NavMeshAgent m_Agent;
     PlayerAnimator m_PlayerAnim;
     void Start()
     {
-        m_CharacterController = GetComponent<CharacterController>();
+        m_Agent = GetComponent<NavMeshAgent>();
         m_PlayerAnim = GetComponent<PlayerAnimator>();
     }
 
@@ -23,18 +24,34 @@ public class Movement : MonoBehaviour
     }
     void Move()
     {
-        Vector3 m_speed = Vector3.zero;
-        if (m_Joystick.MoveThreshold > 0.05f)
+        Vector3 Direction = new Vector3(m_Joystick.Horizontal, 0, m_Joystick.Vertical);
+        Vector3 speed = m_MoveSpeed * Direction * Time.fixedDeltaTime;
+        if (speed.magnitude > 0.01f)
         {
-            Vector3 Direction = new Vector3(m_Joystick.Direction.x, 0, m_Joystick.Direction.y);
-            m_speed = m_MoveSpeed * new Vector3(m_Joystick.Horizontal, 0 , m_Joystick.Vertical) * Time.fixedDeltaTime;
-            m_CharacterController.SimpleMove(m_speed);
+            m_Agent.Move(speed);
+            m_PlayerAnim.SetAnim(speed);
             transform.forward = Direction.normalized;
-            m_PlayerAnim.SetAnim(m_speed);
         }
         else
         {
-            m_PlayerAnim.SetAnim(m_speed);
+            m_PlayerAnim.SetAnim(speed);
         }
     }
 }
+//    void Move()
+//    {
+//        Vector3 m_speed = Vector3.zero;
+//        if (m_Joystick.MoveThreshold > 0.05f)
+//        {
+//            Vector3 Direction = new Vector3(m_Joystick.Direction.x, 0, m_Joystick.Direction.y);
+//            m_speed = m_MoveSpeed * new Vector3(m_Joystick.Horizontal, 0 , m_Joystick.Vertical) * Time.fixedDeltaTime;
+//            m_CharacterController.SimpleMove(m_speed);
+//            transform.forward = Direction.normalized;
+//            m_PlayerAnim.SetAnim(m_speed);
+//        }
+//        else
+//        {
+//            m_PlayerAnim.SetAnim(m_speed);
+//        }
+//    }
+//}

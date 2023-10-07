@@ -10,7 +10,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         if (m_Anim == null)
         {
-            m_Anim = GetComponent<Animator>();
+            m_Anim = GetComponentInChildren<Animator>();
         }
     }
     public void SetAnim(Vector3 _Movement)
@@ -31,6 +31,6 @@ public class PlayerAnimator : MonoBehaviour
     }
     void PlayRun()
     {
-        m_Anim.Play("Run");
+        m_Anim.Play("Fast Run");
     }
 }

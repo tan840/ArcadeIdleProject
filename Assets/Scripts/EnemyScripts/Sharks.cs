@@ -22,11 +22,6 @@ namespace LaZZiiKings.Core
         public override void OnCollisionEnter(Collision other)
         {
             base.OnCollisionEnter(other);
-            if (other.gameObject.layer == 6 && TileScript != null)
-            {
-                print("TakeDamage");
-
-            }
         }
 
     }

@@ -43,13 +43,13 @@ namespace LaZZiiKings.Core
                     GroundTile TileScript = m_Tile.GetComponent<GroundTile>();
                     TileScript.OnTileDestroy += OnTileDestroy;
                     TileScript.GetDamage();
-                    print(other.gameObject.name);
                 }
             }
         }
         void OnTileDestroy()
         {
             m_CanMove = true;
+            print("Destroyed Tile");
         }
     }
 }

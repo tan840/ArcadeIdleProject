@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5397214122725771078}
   - component: {fileID: 7066554515148802887}
   - component: {fileID: 3159801134961967255}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Tile: {fileID: 0}
   m_RB: {fileID: 3159801134961967255}
   m_Speed: 50
+  m_Damage: 10
+  TileScript: {fileID: 0}
 --- !u!54 &3159801134961967255
 Rigidbody:
   m_ObjectHideFlags: 0

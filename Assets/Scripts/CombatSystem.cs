@@ -6,10 +6,12 @@ using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 public class CombatSystem : MonoBehaviour
 {
     [SerializeField] float m_AttackDistance = 1;
+    [SerializeField] int m_AttackDamage = 10;
     [SerializeField] Transform m_Target;
     [SerializeField] LayerMask m_Layer;
     int frames = 0;
     PlayerAnimator m_PlayerAnimator;
+    bool m_HitEnemy = false;
     private void Start()
     {
         m_PlayerAnimator = GetComponent<PlayerAnimator>();
@@ -20,7 +22,6 @@ public class CombatSystem : MonoBehaviour
         if (frames % 10 == 0)
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_AttackDistance, m_Layer);
-            print(hitColliders.Length);
             if (hitColliders.Length >0)
             {
                 foreach (var hitCollider in hitColliders)
@@ -31,6 +32,15 @@ public class CombatSystem : MonoBehaviour
                         Vector3 Direction = m_Target.position - transform.position;
                         transform.forward = Direction.normalized;
                         m_PlayerAnimator.IsAttacking = true;
+                        if (!m_HitEnemy)
+                        {
+                            m_HitEnemy = true;
+                            if (m_Target.TryGetComponent(out HealthSystem _healthSystem))
+                            {
+                                StartCoroutine(DamageEnemy(_healthSystem));
+                            }
+                            
+                        }
                     }
                 }
             }
@@ -40,6 +50,12 @@ public class CombatSystem : MonoBehaviour
                 m_PlayerAnimator.IsAttacking = false;
             }
         }
+    }
+    IEnumerator DamageEnemy(HealthSystem _HealthSystem)
+    {
+        yield return new WaitForSeconds(1f);
+        m_HitEnemy = false;
+        _HealthSystem.TakeDamage(m_AttackDamage);
     }
     private void OnDrawGizmos()
     {

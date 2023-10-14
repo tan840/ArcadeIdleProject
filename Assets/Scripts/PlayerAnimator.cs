@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] Animator m_Anim;
     [SerializeField] float m_RunSpeedMultiplier;
     [SerializeField] bool m_isAttacking = false;
-    string m_CurrentState;
-    const string IDLE_State = "Idle";
-    const string RUN_State = "Fast Run";
-    const string ATTACK_State = "Attack";
+    int m_CurrentState;
+    int IDLE_State = Animator.StringToHash("Idle");
+    int RUN_State = Animator.StringToHash("Fast Run");
+    int ATTACK_State = Animator.StringToHash("Attack");
+    Coroutine AnimState;
     public bool IsAttacking { get => m_isAttacking; set => m_isAttacking = value; }
 
     void Start()
@@ -19,6 +20,10 @@ public class PlayerAnimator : MonoBehaviour
         {
             m_Anim = GetComponentInChildren<Animator>();
         }
+    }
+    private void Update()
+    {
+
     }
     public void SetAnim(Vector3 _Movement)
     {
@@ -37,7 +42,7 @@ public class PlayerAnimator : MonoBehaviour
             SwitchState(IDLE_State);
         }
     }
-    void SwitchState(string _State)
+    void SwitchState(int _State)
     {
         if (_State == m_CurrentState)
         {
@@ -45,6 +50,22 @@ public class PlayerAnimator : MonoBehaviour
         }
         m_CurrentState = _State;
         m_Anim.Play(m_CurrentState);
+        if (AnimState != null)
+        {
+            StopCoroutine(AnimState);
+        }
+        AnimState = StartCoroutine(CheckAnimationCompleted(m_CurrentState));
+    }
+    public IEnumerator CheckAnimationCompleted(int CurrentAnim, Action Oncomplete = null)
+    {
+        //print(m_Anim.GetCurrentAnimatorStateInfo(0).shortNameHash);
+        //print("CurrentAnim " + CurrentAnim);
+        while (m_Anim.GetCurrentAnimatorStateInfo(0).shortNameHash == CurrentAnim)
+        {
+            //print(m_Anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+            yield return null;
+        }
+        Oncomplete?.Invoke();
     }
     //void PlayIdle()
     //{

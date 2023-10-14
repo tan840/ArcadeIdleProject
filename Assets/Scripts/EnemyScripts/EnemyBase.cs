@@ -14,10 +14,12 @@ namespace LaZZiiKings.Core
         [SerializeField] protected float m_Speed = 10f;
         [SerializeField] protected float m_Damage = 10f;
         [SerializeField] protected GroundTile TileScript;
+        [SerializeField] protected Collider m_collider;
         public abstract Transform Target { get; set; }
         public abstract Rigidbody RB { get; }
         public virtual void Start()
-        {          
+        {
+            m_collider = GetComponent<Collider>();
         }
         public virtual void FixedUpdate()
         {
@@ -48,9 +50,9 @@ namespace LaZZiiKings.Core
         }
         void OnTileDestroy()
         {
-            m_CanMove = true;
-            print("Destroyed Tile");
+            m_CanMove = true;            
         }
+        public abstract void OnDeath();
     }
 }
 

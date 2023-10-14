@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5397214122725771078}
   - component: {fileID: 7066554515148802887}
   - component: {fileID: 3159801134961967255}
+  - component: {fileID: 6279649342681832743}
   m_Layer: 7
   m_Name: Shark
   m_TagString: Untagged
@@ -128,6 +129,7 @@ MonoBehaviour:
   m_Speed: 50
   m_Damage: 10
   TileScript: {fileID: 0}
+  m_collider: {fileID: 5397214122725771078}
 --- !u!54 &3159801134961967255
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -155,3 +157,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6279649342681832743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255564902656978961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d56518f8d352341a71144792b16478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Health: 100
+  m_CurrentHealth: 100

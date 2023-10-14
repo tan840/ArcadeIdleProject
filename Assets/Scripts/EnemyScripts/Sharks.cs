@@ -23,7 +23,10 @@ namespace LaZZiiKings.Core
         {
             base.OnCollisionEnter(other);
         }
-
+        public override void OnDeath()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
 

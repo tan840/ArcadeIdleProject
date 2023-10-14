@@ -6,6 +6,9 @@ public class CurrencyManager : Singleton<CurrencyManager>
 {
     [SerializeField] int m_TotalStarCount = 0;
     UIManager m_UIManager;
+
+    public int TotalStarCount { get => m_TotalStarCount; set => m_TotalStarCount = value; }
+
     private void Start()
     {
         m_UIManager = UIManager.Instance;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 namespace LaZZiiKings.Core
 {
@@ -15,11 +16,22 @@ namespace LaZZiiKings.Core
         [SerializeField] protected float m_Damage = 10f;
         [SerializeField] protected GroundTile TileScript;
         [SerializeField] protected Collider m_collider;
+        [SerializeField] protected Animator m_Anim;
+        public Action isDead;
         public abstract Transform Target { get; set; }
         public abstract Rigidbody RB { get; }
         public virtual void Start()
         {
             m_collider = GetComponent<Collider>();
+        }
+        public virtual void OnDisable()
+        {
+            if (m_Tile != null)
+            {
+                GroundTile TileScript = m_Tile.GetComponent<GroundTile>();
+                TileScript.OnTileDestroy -= OnTileDestroy;
+                TileScript.GetDamage();
+            }
         }
         public virtual void FixedUpdate()
         {
@@ -45,12 +57,14 @@ namespace LaZZiiKings.Core
                     GroundTile TileScript = m_Tile.GetComponent<GroundTile>();
                     TileScript.OnTileDestroy += OnTileDestroy;
                     TileScript.GetDamage();
+                    m_Anim.SetBool("Attack", true);
                 }
             }
         }
         void OnTileDestroy()
         {
-            m_CanMove = true;            
+            m_CanMove = true;
+            m_Anim.SetBool("Attack", false);
         }
         public abstract void OnDeath();
     }

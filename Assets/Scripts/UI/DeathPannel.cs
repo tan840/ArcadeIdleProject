@@ -1,18 +1,34 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class DeathPannel : MonoBehaviour
+public class DeathPannel : PannelBase
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Button m_Retry;
+    [SerializeField] Button m_Quit;
+    protected override void Start()
     {
-        
+        base.Start();
+        m_Retry.onClick.AddListener(() => { OnRetry(); });
+        m_Quit.onClick.AddListener(() => { OnQuit(); });
     }
-
-    // Update is called once per frame
-    void Update()
+    protected override void OnEnable()
     {
-        
+        base.OnEnable();
+    }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+    }
+    void OnRetry()
+    {
+        SceneManager.LoadScene(0);
+    }
+    void OnQuit()
+    {
+        Application.Quit();
     }
 }

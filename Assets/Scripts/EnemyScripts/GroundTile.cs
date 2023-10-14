@@ -2,20 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using static GameManager;
+using DG.Tweening;
 
 public class GroundTile : MonoBehaviour
 {
     [SerializeField] float m_TileHealth;
+    [SerializeField] float m_MoveDownDistance;
     public Action OnTileDestroy;
     bool m_TakeDamage = false;
+    bool isEnabled = true;
     Coroutine m_DamageCoroutine;
     GameManager m_GameManager;
     public bool TakeDamage { get => m_TakeDamage; set => m_TakeDamage = value; }
     public float TileHealth { get => m_TileHealth; }
+    public bool IsEnabled { get => isEnabled; set => isEnabled = value; }
+
     private void Start()
     {
         m_GameManager = GameManager.Instance;
+    }
+    private void OnEnable()
+    {
+        isEnabled = true;
+    }
+    private void OnDisable()
+    {
+        transform.position = new Vector3(transform.position.x, 0.8389983f, transform.position.z);
     }
     public void GetDamage()
     {
@@ -28,18 +40,30 @@ public class GroundTile : MonoBehaviour
     IEnumerator DamageSequence()
     {
         yield return null;
+        bool m_BellowBreakthreshold = false;
         while (m_TakeDamage)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.8f);
             m_TileHealth -= 10;
+            if (m_TileHealth <50 && !m_BellowBreakthreshold)
+            {
+                m_BellowBreakthreshold = true;
+                SinkTile();
+            }
             if (m_TileHealth <= 0)
             {
                 m_TakeDamage = false;
                 m_GameManager.BakeNavmesh?.Invoke();
                 OnTileDestroy?.Invoke();
                 StopCoroutine(m_DamageCoroutine);
+                isEnabled = false;
                 gameObject.SetActive(false);
             }
         }
+    }
+    void SinkTile()
+    {
+        transform.DOLocalMoveY(m_MoveDownDistance, 1f);
+        //transform.DORotate(new Vector3(transform.rotation.x , transform.rotation.y, transform.rotation.z), 1f);
     }
 }

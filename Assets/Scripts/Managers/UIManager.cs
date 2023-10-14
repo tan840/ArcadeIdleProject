@@ -27,6 +27,10 @@ public class UIManager : Singleton<UIManager>
     {
         SetText(0);
     }
+    private void OnEnable()
+    {
+        SwitchPannel(UIType.MainGameplay);
+    }
     public void SetText(int _Coin)
     {
         m_StarText.text = _Coin.ToString();

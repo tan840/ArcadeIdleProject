@@ -26,6 +26,7 @@ namespace LaZZiiKings.Core
         public override void OnDeath()
         {
             gameObject.SetActive(false);
+            isDead?.Invoke();
         }
     }
 }

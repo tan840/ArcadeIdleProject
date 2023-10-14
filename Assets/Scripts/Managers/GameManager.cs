@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        m_NavmeshSurface = GameObject.FindAnyObjectByType<NavMeshSurface>();
         m_UIManager = UIManager.Instance;
         BakeNavmesh += BakeNavMesh;
         IsGameOver += GameOver;

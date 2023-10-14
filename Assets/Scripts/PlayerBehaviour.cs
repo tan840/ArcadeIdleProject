@@ -10,10 +10,12 @@ public class PlayerBehaviour : MonoBehaviour
     bool isDead = false;
     NavMeshAgent m_Agent;
     public UnityAction OnDead;
+    GameManager m_GameManager;
     private void Awake()
     {
         m_RB = GetComponentInChildren<Rigidbody>();
         m_Agent = GetComponent<NavMeshAgent>();
+        m_GameManager = GameManager.Instance;
         OnDead += MakeDead;
     }
     void MakeDead()
@@ -23,5 +25,6 @@ public class PlayerBehaviour : MonoBehaviour
         m_Agent.enabled = false;
         m_RB.isKinematic = false;
         isDead = true;
+        m_GameManager.IsGameOver?.Invoke();
     }
 }

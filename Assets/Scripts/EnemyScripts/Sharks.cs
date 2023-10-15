@@ -28,6 +28,10 @@ namespace LaZZiiKings.Core
             gameObject.SetActive(false);
             isDead?.Invoke();
         }
+        public override void MelleAttack()
+        {
+            base.MelleAttack();
+        }
     }
 }
 

@@ -17,8 +17,6 @@ public class Cannon : MonoBehaviour
     [SerializeField] Transform m_ShootPos;
 
     int frames = 0;
-    //PlayerAnimator m_PlayerAnimator;
-    bool m_HitEnemy = false;
     private void FixedUpdate()
     {
         frames++;
@@ -53,11 +51,11 @@ public class Cannon : MonoBehaviour
     IEnumerator Shoot()
     {
         yield return new WaitForSeconds(1f);
-        m_HitEnemy = false;
         //_HealthSystem.TakeDamage(m_AttackDamage);
         while (m_Target != null)
         {
             GameObject ball = Instantiate(m_BallPrefab, m_ShootPos.position, m_ShootPos.rotation, transform);
+            ball.GetComponent<CannonBall>().Damage = m_AttackDamage;
             yield return new WaitForSeconds(5f);
         }
         m_CanShoot = true;

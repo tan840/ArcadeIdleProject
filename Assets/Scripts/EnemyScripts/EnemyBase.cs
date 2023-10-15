@@ -13,7 +13,7 @@ namespace LaZZiiKings.Core
         [SerializeField] protected Transform m_Tile;
         [SerializeField] protected Rigidbody m_RB;
         [SerializeField] protected float m_Speed = 10f;
-        [SerializeField] protected float m_Damage = 10f;
+        [SerializeField] protected int m_Damage = 10;
         [SerializeField] protected GroundTile TileScript;
         [SerializeField] protected Collider m_collider;
         [SerializeField] protected Animator m_Anim;
@@ -23,6 +23,7 @@ namespace LaZZiiKings.Core
         public virtual void Start()
         {
             m_collider = GetComponent<Collider>();
+            m_Anim = GetComponent<Animator>();
         }
         public virtual void OnDisable()
         {
@@ -30,7 +31,6 @@ namespace LaZZiiKings.Core
             {
                 GroundTile TileScript = m_Tile.GetComponent<GroundTile>();
                 TileScript.OnTileDestroy -= OnTileDestroy;
-                TileScript.GetDamage();
             }
         }
         public virtual void FixedUpdate()
@@ -40,10 +40,12 @@ namespace LaZZiiKings.Core
                 Vector3 Direction = m_Target.position - transform.position;
                 transform.forward = Direction.normalized;
                 m_RB.velocity = Direction.normalized * m_Speed * Time.fixedDeltaTime;
+                m_Anim.SetBool("Attack", false);
             }
             else
             {
                 m_RB.velocity = Vector3.zero;
+                m_RB.angularVelocity = Vector3.zero;
             }
         }
         public virtual void OnCollisionEnter(Collision other)
@@ -56,9 +58,18 @@ namespace LaZZiiKings.Core
                     m_CanMove = false;
                     GroundTile TileScript = m_Tile.GetComponent<GroundTile>();
                     TileScript.OnTileDestroy += OnTileDestroy;
-                    TileScript.GetDamage();
+                    //TileScript.GetDamage();
                     m_Anim.SetBool("Attack", true);
                 }
+            }
+        }
+        public virtual void MelleAttack()
+        {
+            if (m_Tile != null)
+            {
+                print("Attacking");
+                GroundTile TileScript = m_Tile.GetComponent<GroundTile>();
+                TileScript.GetDamage(m_Damage);
             }
         }
         void OnTileDestroy()

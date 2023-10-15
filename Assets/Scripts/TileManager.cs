@@ -5,8 +5,10 @@ using UnityEngine;
 public class TileManager : Singleton<TileManager>
 {
     [SerializeField] List<GroundTile> m_Tiles = new();
+    [SerializeField] List<GroundTile> m_CannonTile = new();
 
     public List<GroundTile> Tiles { get => m_Tiles; set => m_Tiles = value; }
+    public List<GroundTile> CannonTile { get => m_CannonTile; set => m_CannonTile = value; }
 
     void Start()
     {

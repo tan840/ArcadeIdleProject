@@ -26,8 +26,8 @@ public class MenuPannel : PannelBase
         base.Start();
         m_Tile.onClick.AddListener(() => { Tile(); });
         m_Strength.onClick.AddListener(() => { Strength(); });
-        m_Cannon.onClick.AddListener(() => {  Cannon(); });
-        m_Start.onClick.AddListener(() => {  StartWave(); });
+        m_Cannon.onClick.AddListener(() => { Cannon(); });
+        m_Start.onClick.AddListener(() => { StartWave(); });
         m_CurrencyManager = CurrencyManager.Instance;
         m_GameManager = GameManager.Instance;
     }
@@ -63,7 +63,7 @@ public class MenuPannel : PannelBase
         {
             m_CurrencyManager.TotalStarCount -= m_TileCost;
             m_GameManager.PlayerCombatReference.AttackDamage++;
-            m_GameManager.PlayerCombatReference.transform.DOPunchScale(GameManager.Instance.PlayerCombatReference.transform.localScale*1.2f, 0.25f, 5,0.5f);
+            m_GameManager.PlayerCombatReference.transform.DOPunchScale(GameManager.Instance.PlayerCombatReference.transform.localScale * 1.2f, 0.25f, 5, 0.5f);
         }
     }
     void Cannon()
@@ -71,17 +71,16 @@ public class MenuPannel : PannelBase
         if (m_TileCost <= m_CurrencyManager.TotalStarCount)
         {
             m_CurrencyManager.TotalStarCount -= m_TileCost;
-            foreach (var item in TileManager.Instance.Tiles)
+            foreach (var item in TileManager.Instance.CannonTile)
             {
-                if (item.TryGetComponent(out GroundTile Tile))
+                if (item.IsEnabled && m_CannonCount > spawnnedCannon)
                 {
-                    if (Tile.IsEnabled && m_CannonCount > spawnnedCannon)
-                    {
-                        spawnnedCannon++;
-                        m_GameManager.SpawnCannon(Tile.transform.localPosition + m_CannonOffset);
-                        break;
-                    }
+                    TileManager.Instance.CannonTile.Remove(item);
+                    spawnnedCannon++;
+                    m_GameManager.SpawnCannon(item.transform.position + m_CannonOffset);
+                    break;
                 }
+
             }
         }
     }

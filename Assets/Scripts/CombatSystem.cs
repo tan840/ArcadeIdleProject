@@ -55,7 +55,6 @@ public class CombatSystem : MonoBehaviour
             }
             else
             {
-                //Hit.PlayOneShot(Hit.clip);
                 m_Target = null;
                 m_PlayerAnimator.IsAttacking = false;
             }

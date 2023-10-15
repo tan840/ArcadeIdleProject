@@ -29,38 +29,32 @@ public class GroundTile : MonoBehaviour
     }
     private void OnDisable()
     {
+        StopCoroutine(m_DamageCoroutine);
         transform.position = InitialPosition;
     }
-    public void GetDamage()
+    public void GetDamage(int _DamageAmount)
     {
-        if (m_DamageCoroutine == null)
-        {
-            m_TakeDamage = true;
-            m_DamageCoroutine = StartCoroutine(DamageSequence());
-        }
+        m_DamageCoroutine = StartCoroutine(DamageSequence(_DamageAmount));
     }
-    IEnumerator DamageSequence()
+    IEnumerator DamageSequence(int _DamageAmount)
     {
         yield return null;
         bool m_BellowBreakthreshold = false;
-        while (m_TakeDamage)
+        //yield return new WaitForSeconds(0.8f);
+        m_TileHealth -= _DamageAmount;
+        if (m_TileHealth < 50 && !m_BellowBreakthreshold)
         {
-            yield return new WaitForSeconds(0.8f);
-            m_TileHealth -= 10;
-            if (m_TileHealth <50 && !m_BellowBreakthreshold)
-            {
-                m_BellowBreakthreshold = true;
-                SinkTile();
-            }
-            if (m_TileHealth <= 0)
-            {
-                m_TakeDamage = false;
-                m_GameManager.BakeNavmesh?.Invoke();
-                OnTileDestroy?.Invoke();
-                StopCoroutine(m_DamageCoroutine);
-                isEnabled = false;
-                gameObject.SetActive(false);
-            }
+            m_BellowBreakthreshold = true;
+            SinkTile();
+        }
+        if (m_TileHealth <= 0)
+        {
+            m_TakeDamage = false;
+            m_GameManager.BakeNavmesh?.Invoke();
+            OnTileDestroy?.Invoke();
+            StopCoroutine(m_DamageCoroutine);
+            isEnabled = false;
+            gameObject.SetActive(false);
         }
     }
     void SinkTile()

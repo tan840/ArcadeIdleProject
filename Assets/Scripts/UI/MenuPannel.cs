@@ -1,3 +1,4 @@
+using DG.Tweening;
 using LaZZiiKings.Core;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,9 +14,13 @@ public class MenuPannel : PannelBase
     [SerializeField] int m_StrengthCost;
     [SerializeField] Button m_Strength;
     [SerializeField] int m_CannonCost;
+    [SerializeField] Vector3 m_CannonOffset;
+    [SerializeField] int m_CannonCount = 1;
     [SerializeField] Button m_Cannon;
     [SerializeField] Button m_Start;
     CurrencyManager m_CurrencyManager;
+    GameManager m_GameManager;
+    int spawnnedCannon = 0;
     protected override void Start()
     {
         base.Start();
@@ -24,6 +29,7 @@ public class MenuPannel : PannelBase
         m_Cannon.onClick.AddListener(() => {  Cannon(); });
         m_Start.onClick.AddListener(() => {  StartWave(); });
         m_CurrencyManager = CurrencyManager.Instance;
+        m_GameManager = GameManager.Instance;
     }
     protected override void OnEnable()
     {
@@ -38,17 +44,6 @@ public class MenuPannel : PannelBase
         if (m_TileCost <= m_CurrencyManager.TotalStarCount)
         {
             m_CurrencyManager.TotalStarCount -= m_TileCost;
-            //for (int i = 0; i < TileManager.Tiles.Count; i++)
-            //{
-            //    if (TileManager.Tiles[i].TryGetComponent(out GroundTile Tile))
-            //    {
-            //        if (!Tile.IsEnabled)
-            //        {
-            //            Tile.gameObject.SetActive(true);
-            //            break;
-            //        }
-            //    }
-            //}
             foreach (var item in TileManager.Instance.Tiles)
             {
                 if (item.TryGetComponent(out GroundTile Tile))
@@ -64,15 +59,36 @@ public class MenuPannel : PannelBase
     }
     void Strength()
     {
-
+        if (m_TileCost <= m_CurrencyManager.TotalStarCount)
+        {
+            m_CurrencyManager.TotalStarCount -= m_TileCost;
+            m_GameManager.PlayerCombatReference.AttackDamage++;
+            m_GameManager.PlayerCombatReference.transform.DOPunchScale(GameManager.Instance.PlayerCombatReference.transform.localScale*1.2f, 0.25f, 5,0.5f);
+        }
     }
     void Cannon()
     {
-
+        if (m_TileCost <= m_CurrencyManager.TotalStarCount)
+        {
+            m_CurrencyManager.TotalStarCount -= m_TileCost;
+            foreach (var item in TileManager.Instance.Tiles)
+            {
+                if (item.TryGetComponent(out GroundTile Tile))
+                {
+                    if (Tile.IsEnabled && m_CannonCount > spawnnedCannon)
+                    {
+                        spawnnedCannon++;
+                        m_GameManager.SpawnCannon(Tile.transform.localPosition + m_CannonOffset);
+                        break;
+                    }
+                }
+            }
+        }
     }
     void StartWave()
     {
         UIManager.Instance.SwitchPannel(UIManager.UIType.MainGameplay);
         EnemyController.Instance.SpawnWave();
+        m_GameManager.BakeNavMesh();
     }
 }

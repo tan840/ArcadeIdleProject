@@ -58,7 +58,7 @@ namespace LaZZiiKings.Core
         void EnemyDeadCount()
         {
             m_EnemykilledCount++;
-            print("Killed " + m_MaxSpawnCount + " " + m_EnemykilledCount);
+            //print("Killed " + m_MaxSpawnCount + " " + m_EnemykilledCount);
             if (m_MaxSpawnCount <= m_EnemykilledCount)
             {
                 Invoke(nameof(SwitchUI), 3f);

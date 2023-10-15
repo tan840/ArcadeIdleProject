@@ -54,7 +54,7 @@ public class Movement : MonoBehaviour
     void GroundCheck()
     {
         RaycastHit m_hit;
-        if (Physics.BoxCast(transform.position + m_Offset,Vector3.one *0.5f, Vector3.down,out m_hit,Quaternion.identity, m_RayLength, m_layer))
+        if (Physics.BoxCast(transform.position + m_Offset,Vector3.one * 0.25f, Vector3.down,out m_hit,Quaternion.identity, m_RayLength, m_layer))
         {
             m_isGrounded = true;
         }
@@ -65,6 +65,6 @@ public class Movement : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(transform.position + m_Offset, Vector3.one);
+        Gizmos.DrawCube(transform.position + m_Offset, Vector3.one * 0.25f);
     }
 }

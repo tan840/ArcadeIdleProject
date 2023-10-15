@@ -13,6 +13,7 @@ public class GroundTile : MonoBehaviour
     bool isEnabled = true;
     Coroutine m_DamageCoroutine;
     GameManager m_GameManager;
+    Vector3 InitialPosition;
     public bool TakeDamage { get => m_TakeDamage; set => m_TakeDamage = value; }
     public float TileHealth { get => m_TileHealth; }
     public bool IsEnabled { get => isEnabled; set => isEnabled = value; }
@@ -20,6 +21,7 @@ public class GroundTile : MonoBehaviour
     private void Start()
     {
         m_GameManager = GameManager.Instance;
+        InitialPosition = transform.position;
     }
     private void OnEnable()
     {
@@ -27,7 +29,7 @@ public class GroundTile : MonoBehaviour
     }
     private void OnDisable()
     {
-        transform.position = new Vector3(transform.position.x, 0.8389983f, transform.position.z);
+        transform.position = InitialPosition;
     }
     public void GetDamage()
     {

@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f73cc8981483e943ba97900533f728f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _persistent: 1
+  _persistent: 0
   m_SpawnPoints:
   - {fileID: 27704690}
   - {fileID: 680428470}
@@ -450,7 +450,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 0
+  m_CannonPrefab: {fileID: 7282924890022053824, guid: 623500f8815a660478cb24b84a3a5f9d,
+    type: 3}
   m_NavmeshSurface: {fileID: 1190288161}
+  m_PlayerCombatReference: {fileID: 0}
 --- !u!4 &57246833
 Transform:
   m_ObjectHideFlags: 0
@@ -817,7 +820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 0
-  m_TotalStarCount: 0
+  m_TotalStarCount: 10
 --- !u!4 &103860270
 Transform:
   m_ObjectHideFlags: 0
@@ -4436,6 +4439,8 @@ MonoBehaviour:
   m_StrengthCost: 1
   m_Strength: {fileID: 1711855888}
   m_CannonCost: 2
+  m_CannonOffset: {x: 0, y: 7, z: 0}
+  m_CannonCount: 1
   m_Cannon: {fileID: 603419046}
   m_Start: {fileID: 1481658697}
 --- !u!1 &1048824325 stripped
@@ -5881,7 +5886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1457310516
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7268,7 +7273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Joystick: {fileID: 602060151}
   m_MoveSpeed: 8
-  m_RayLength: 5
+  m_RayLength: 2
   m_layer:
     serializedVersion: 2
     m_Bits: 64

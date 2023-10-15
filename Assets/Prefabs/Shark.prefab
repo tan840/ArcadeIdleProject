@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Target: {fileID: 0}
   m_Tile: {fileID: 0}
   m_RB: {fileID: 3159801134961967255}
-  m_Speed: 50
+  m_Speed: 70
   m_Damage: 5
   TileScript: {fileID: 0}
   m_collider: {fileID: 5397214122725771078}
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4d56518f8d352341a71144792b16478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Health: 100
+  m_Health: 50
   m_CurrentHealth: 100
 --- !u!1 &1347360032258289452
 GameObject:
@@ -709,7 +709,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3912123632831408057}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: d56d98df7b10d1747bfdde6638738882, type: 3}
+  m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: cbee8962c75469a459b66c1e31e4e7a8, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0

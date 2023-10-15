@@ -18,6 +18,7 @@ public class Movement : MonoBehaviour
     [SerializeField] bool m_isGrounded;
     [SerializeField] Vector3 m_Offset;
 
+    [SerializeField] ParticleSystem Dust_puff;
     private void Awake()
     {
         m_Agent = GetComponent<NavMeshAgent>();
@@ -40,9 +41,11 @@ public class Movement : MonoBehaviour
                 m_Agent.Move(speed);
                 m_PlayerAnim.SetAnim(speed);
                 transform.forward = Direction.normalized;
+                Dust_puff.Play();
             }
             else
             {
+                Dust_puff.Stop();
                 m_PlayerAnim.SetAnim(speed);
             }
         }

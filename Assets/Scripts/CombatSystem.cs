@@ -13,6 +13,10 @@ public class CombatSystem : MonoBehaviour
     PlayerAnimator m_PlayerAnimator;
     bool m_HitEnemy = false;
 
+    [SerializeField] AudioSource Hit;
+
+    [SerializeField] ParticleSystem Blood;
+    [SerializeField] GameObject Bloodspawnpoint;
     public int AttackDamage { get => m_AttackDamage; set => m_AttackDamage = value; }
 
     private void Start()
@@ -32,6 +36,8 @@ public class CombatSystem : MonoBehaviour
                     m_Target = hitCollider.transform;
                     if (m_Target != null)
                     {
+                        Instantiate(Blood , Bloodspawnpoint.transform.position, Quaternion.identity);
+                        //Blood.Play();
                         Vector3 Direction = m_Target.position - transform.position;
                         transform.forward = Direction.normalized;
                         m_PlayerAnimator.IsAttacking = true;
@@ -49,6 +55,7 @@ public class CombatSystem : MonoBehaviour
             }
             else
             {
+                //Hit.PlayOneShot(Hit.clip);
                 m_Target = null;
                 m_PlayerAnimator.IsAttacking = false;
             }

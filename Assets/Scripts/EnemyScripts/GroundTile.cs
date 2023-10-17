@@ -29,12 +29,21 @@ public class GroundTile : MonoBehaviour
     }
     private void OnDisable()
     {
-        StopCoroutine(m_DamageCoroutine);
+        isEnabled = false;
+        if (m_DamageCoroutine != null)
+        {
+            StopCoroutine(m_DamageCoroutine);
+
+        }
         transform.position = InitialPosition;
     }
     public void GetDamage(int _DamageAmount)
     {
-        m_DamageCoroutine = StartCoroutine(DamageSequence(_DamageAmount));
+        if (isEnabled)
+        {
+            m_DamageCoroutine = StartCoroutine(DamageSequence(_DamageAmount));
+
+        }
     }
     IEnumerator DamageSequence(int _DamageAmount)
     {

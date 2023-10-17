@@ -67,6 +67,8 @@ namespace LaZZiiKings.Core
         void SwitchUI()
         {
             UIManager.Instance.SwitchPannel(UIManager.UIType.MainMenu);
+            Spawncount = 0;
+            m_EnemykilledCount = 0;
         }
     }
     [System.Serializable]

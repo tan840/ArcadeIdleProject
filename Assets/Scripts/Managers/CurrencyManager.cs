@@ -17,6 +17,10 @@ public class CurrencyManager : Singleton<CurrencyManager>
     public void CollectStar(int _Value)
     {
         m_TotalStarCount += _Value;
+        UpdateStar();
+    }
+    public void UpdateStar()
+    {
         m_UIManager.SetText(m_TotalStarCount);
     }
 }

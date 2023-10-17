@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Health: 50
-  m_CurrentHealth: 100
+  m_CurrentHealth: 50
 --- !u!95 &6853493990399268928
 Animator:
   serializedVersion: 5

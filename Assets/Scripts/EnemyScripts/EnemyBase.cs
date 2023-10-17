@@ -67,7 +67,7 @@ namespace LaZZiiKings.Core
         {
             if (m_Tile != null)
             {
-                print("Attacking");
+                //print("Attacking");
                 GroundTile TileScript = m_Tile.GetComponent<GroundTile>();
                 TileScript.GetDamage(m_Damage);
             }

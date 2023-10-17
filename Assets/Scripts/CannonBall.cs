@@ -15,7 +15,7 @@ public class CannonBall : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.name);
+        //print(other.gameObject.name);
         if (other.gameObject.layer == 7)
         {
             if (other.gameObject.TryGetComponent(out HealthSystem m_Health))

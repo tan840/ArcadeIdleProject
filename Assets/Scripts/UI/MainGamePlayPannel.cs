@@ -15,7 +15,7 @@ public class MainGamePlayPannel : PannelBase
         base.Start();
         m_Retry.onClick.AddListener(() => { OnRetry(); });
         ShowInstruction = PlayerPrefs.GetInt("INSTRUCTIONDATA", 0);
-        print(ShowInstruction);
+        //print(ShowInstruction);
         if (ShowInstruction < 2)
         {
             ShowInstruction++;

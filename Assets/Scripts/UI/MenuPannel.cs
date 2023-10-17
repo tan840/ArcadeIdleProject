@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class MenuPannel : PannelBase
 {
@@ -44,6 +43,7 @@ public class MenuPannel : PannelBase
         if (m_TileCost <= m_CurrencyManager.TotalStarCount)
         {
             m_CurrencyManager.TotalStarCount -= m_TileCost;
+            m_CurrencyManager.UpdateStar();
             foreach (var item in TileManager.Instance.Tiles)
             {
                 if (item.TryGetComponent(out GroundTile Tile))
@@ -59,18 +59,20 @@ public class MenuPannel : PannelBase
     }
     void Strength()
     {
-        if (m_TileCost <= m_CurrencyManager.TotalStarCount)
+        if (m_StrengthCost <= m_CurrencyManager.TotalStarCount)
         {
-            m_CurrencyManager.TotalStarCount -= m_TileCost;
+            m_CurrencyManager.TotalStarCount -= m_StrengthCost;
+            m_CurrencyManager.UpdateStar();
             m_GameManager.PlayerCombatReference.AttackDamage++;
             m_GameManager.PlayerCombatReference.transform.DOPunchScale(GameManager.Instance.PlayerCombatReference.transform.localScale * 1.2f, 0.25f, 5, 0.5f);
         }
     }
     void Cannon()
     {
-        if (m_TileCost <= m_CurrencyManager.TotalStarCount)
+        if (m_CannonCost <= m_CurrencyManager.TotalStarCount)
         {
-            m_CurrencyManager.TotalStarCount -= m_TileCost;
+            m_CurrencyManager.TotalStarCount -= m_CannonCost;
+            m_CurrencyManager.UpdateStar();
             foreach (var item in TileManager.Instance.CannonTile)
             {
                 if (item.IsEnabled && m_CannonCount > spawnnedCannon)
